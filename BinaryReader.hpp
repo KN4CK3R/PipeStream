@@ -3,12 +3,11 @@
 #include <vector>
 
 #include "Stream.hpp"
-#include "Exceptions.hpp"
 
 class BinaryReader
 {
 public:
-	BinaryReader(Stream& input);
+	explicit BinaryReader(Stream& input);
 
 	bool ReadBoolean();
 

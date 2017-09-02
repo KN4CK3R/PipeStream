@@ -1,4 +1,5 @@
 #include "BinaryReader.hpp"
+#include "Exceptions.hpp"
 
 BinaryReader::BinaryReader(Stream& _input)
 	: input(_input),
@@ -15,7 +16,7 @@ bool BinaryReader::ReadBoolean()
 //---------------------------------------------------------------------------
 uint8_t BinaryReader::ReadByte() const
 {
-	const int b = input.ReadByte();
+	const auto b = input.ReadByte();
 	if (b == -1)
 	{
 		throw IOException();
@@ -126,11 +127,11 @@ std::wstring BinaryReader::ReadString() const
 
 	std::wstring tmp;
 
-	int currPos = 0;
+	auto currPos = 0;
 	uint8_t charBytes[MaxCharBytesSize];
 	do
 	{
-		const auto readLength = (byteLength - currPos) > MaxCharBytesSize ? MaxCharBytesSize : byteLength - currPos;
+		const auto readLength = byteLength - currPos > MaxCharBytesSize ? MaxCharBytesSize : byteLength - currPos;
 
 		const auto n = input.Read(charBytes, 0, readLength);
 		if (n == 0)
@@ -148,8 +149,8 @@ std::wstring BinaryReader::ReadString() const
 //---------------------------------------------------------------------------
 void BinaryReader::FillBuffer(int numBytes)
 {
-	int bytesRead = 0;
-	int n = 0;
+	auto bytesRead = 0;
+	auto n = 0;
 
 	if (numBytes == 1)
 	{
@@ -177,8 +178,8 @@ int BinaryReader::Read7BitEncodedInt() const
 {
 	// Read out an int32 7 bits at a time. The high bit of the
 	// byte when on means to continue reading more bytes.
-	int count = 0;
-	int shift = 0;
+	auto count = 0;
+	auto shift = 0;
 	uint8_t b;
 	do
 	{

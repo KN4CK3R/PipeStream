@@ -11,9 +11,9 @@ public:
 
 	MemoryStream(int capacity);
 
-	MemoryStream(const std::vector<uint8_t>& buffer);
+	explicit MemoryStream(const std::vector<uint8_t>& buffer);
 
-	virtual ~MemoryStream() override;
+	~MemoryStream() override;
 
 	int GetCapacity() const;
 
@@ -25,16 +25,15 @@ public:
 
 	void SetPosition(int value);
 
-	virtual int Read(uint8_t* buffer, int offset, int count) override;
+	int Read(uint8_t* buffer, int offset, int count) override;
 
-	virtual void Write(const uint8_t* buffer, int offset, int count) override;
+	void Write(const uint8_t* buffer, int offset, int count) override;
 
 	std::vector<uint8_t> ToArray() const;
 
 private:
 	bool EnsureCapacity(int value);
 
-private:
 	const unsigned int MaxByteArrayLength = 0x7FFFFFC7;
 
 	std::vector<uint8_t> buffer;

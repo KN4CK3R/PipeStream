@@ -26,7 +26,7 @@ NamedPipeServerStream::~NamedPipeServerStream()
 //---------------------------------------------------------------------------
 void NamedPipeServerStream::Create(const std::wstring& fullPipeName, PipeDirection direction, int maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, int inBufferSize, int outBufferSize)
 {
-	const int pipeModes = static_cast<int>(transmissionMode) << 2 | static_cast<int>(transmissionMode) << 1;
+	const auto pipeModes = static_cast<int>(transmissionMode) << 2 | static_cast<int>(transmissionMode) << 1;
 
 	if (maxNumberOfServerInstances == MaxAllowedServerInstances)
 	{

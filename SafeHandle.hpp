@@ -27,7 +27,6 @@ protected:
 		handle = _handle;
 	}
 
-protected:
 	HANDLE handle;
 	bool ownsHandle;
 };
@@ -35,13 +34,13 @@ protected:
 class SafeHandleZeroOrMinusOneIsInvalid : public SafeHandle
 {
 protected:
-	SafeHandleZeroOrMinusOneIsInvalid(bool ownsHandle)
+	explicit SafeHandleZeroOrMinusOneIsInvalid(bool ownsHandle)
 		: SafeHandle(nullptr, ownsHandle)
 	{
 	}
 
 public:
-	virtual bool IsInvalid() override
+	bool IsInvalid() override
 	{
 		return handle == nullptr || handle == INVALID_HANDLE_VALUE;
 	}

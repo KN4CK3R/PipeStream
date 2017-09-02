@@ -7,7 +7,7 @@
 class BinaryWriter
 {
 public:
-	BinaryWriter(Stream& output);
+	explicit BinaryWriter(Stream& output);
 
 	void Write(bool value);
 

@@ -26,7 +26,7 @@ public:
 		copy.handle = nullptr;
 	}
 
-	virtual ~SafePipeHandle() override
+	~SafePipeHandle() override
 	{
 		if (handle != nullptr && ownsHandle)
 		{
@@ -88,27 +88,27 @@ enum class PipeState
 class PipeStream : public Stream
 {
 protected:
-	PipeStream(PipeDirection direction);
+	explicit PipeStream(PipeDirection direction);
 
 	PipeStream(PipeDirection direction, PipeTransmissionMode transmissionMode);
 
 public:
 	bool IsMessageComplete() const;
 
-	virtual int Read(uint8_t* buffer, int offset, int count) override;
+	int Read(uint8_t* buffer, int offset, int count) override;
 
-	virtual int ReadByte() override;
+	int ReadByte() override;
 
 	void Write(const uint8_t* buffer, int offset, int count) override;
 
-	virtual void WriteByte(uint8_t value) override;
+	void WriteByte(uint8_t value) override;
 
 private:
 	void CheckReadOperations();
 
 	void CheckWriteOperations();
 
-	void WinIOError(int errorCode);
+	void WinIoError(int errorCode);
 
 	int ReadCore(uint8_t* buffer, int offset, int count);
 
