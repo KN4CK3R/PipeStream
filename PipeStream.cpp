@@ -96,7 +96,7 @@ void PipeStream::CheckWriteOperations()
 	}
 }
 //---------------------------------------------------------------------------
-void PipeStream::WinIOError(int errorCode)
+void PipeStream::WinIoError(int errorCode)
 {
 	if (errorCode == ERROR_BROKEN_PIPE || errorCode == ERROR_PIPE_NOT_CONNECTED || errorCode == ERROR_NO_DATA)
 	{
