@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 
 #include "Stream.hpp"
@@ -8,7 +9,7 @@
 class BinaryReader
 {
 public:
-	BinaryReader(Stream& input);
+	explicit BinaryReader(Stream& input);
 
 	bool ReadBoolean();
 
