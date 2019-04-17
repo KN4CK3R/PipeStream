@@ -12,7 +12,7 @@ public:
 	virtual int ReadByte()
 	{
 		uint8_t oneByteArray[1];
-		const int r = Read(oneByteArray, 0, 1);
+		const auto r = Read(oneByteArray, 0, 1);
 		if (r == 0)
 		{
 			return -1;

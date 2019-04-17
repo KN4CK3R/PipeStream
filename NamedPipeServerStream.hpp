@@ -11,7 +11,7 @@ public:
 
 	NamedPipeServerStream(const std::wstring& pipeName, PipeDirection direction, int maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, int inBufferSize, int outBufferSize);
 
-	virtual ~NamedPipeServerStream() override;
+	~NamedPipeServerStream() override;
 
 private:
 	void Create(const std::wstring& fullPipeName, PipeDirection direction, int maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, int inBufferSize, int outBufferSize);

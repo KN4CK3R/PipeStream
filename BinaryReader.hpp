@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "Stream.hpp"
-#include "Exceptions.hpp"
 
 class BinaryReader
 {

@@ -50,7 +50,7 @@ int PipeStream::ReadByte()
 	CheckReadOperations();
 
 	uint8_t buffer[1];
-	const int n = ReadCore(buffer, 0, 1);
+	const auto n = ReadCore(buffer, 0, 1);
 
 	if (n == 0)
 	{
@@ -96,29 +96,25 @@ void PipeStream::CheckWriteOperations()
 	}
 }
 //---------------------------------------------------------------------------
-void PipeStream::WinIOError(int errorCode)
+void PipeStream::WinIoError(int errorCode)
 {
 	if (errorCode == ERROR_BROKEN_PIPE || errorCode == ERROR_PIPE_NOT_CONNECTED || errorCode == ERROR_NO_DATA)
 	{
 		state = PipeState::Broken;
 
 		throw IOException(errorCode);
-
 	}
-	else if (errorCode == ERROR_HANDLE_EOF)
+	if (errorCode == ERROR_HANDLE_EOF)
 	{
 		throw IOException();
 	}
-	else
+	if (errorCode == ERROR_INVALID_HANDLE)
 	{
-		if (errorCode == ERROR_INVALID_HANDLE)
-		{
-			handle = SafePipeHandle();
-			state = PipeState::Broken;
-		}
-
-		throw IOException(errorCode);
+		handle = SafePipeHandle();
+		state = PipeState::Broken;
 	}
+
+	throw IOException(errorCode);
 }
 //---------------------------------------------------------------------------
 int PipeStream::ReadCore(uint8_t* buffer, int offset, int count)
@@ -163,18 +159,16 @@ int PipeStream::ReadFileNative(const SafePipeHandle& handle, uint8_t* buffer, in
 
 		return -1;
 	}
-	else
-	{
-		hr = 0;
-	}
+
+	hr = 0;
 
 	return numBytesRead;
 }
 //---------------------------------------------------------------------------
 void PipeStream::WriteCore(const uint8_t* buffer, int offset, int count) const
 {
-	int hr = 0;
-	const int r = WriteFileNative(handle, buffer, offset, count, hr);
+	auto hr = 0;
+	const auto r = WriteFileNative(handle, buffer, offset, count, hr);
 
 	if (r == -1)
 	{
@@ -191,17 +185,15 @@ int PipeStream::WriteFileNative(const SafePipeHandle& handle, const uint8_t* buf
 	}
 
 	DWORD numBytesWritten = 0;
-	const int r = WriteFile(handle.GetHandle(), buffer + offset, count, &numBytesWritten, nullptr);
+	const auto r = WriteFile(handle.GetHandle(), buffer + offset, count, &numBytesWritten, nullptr);
 	if (r == 0)
 	{
 		hr = GetLastError();
 
 		return -1;
 	}
-	else
-	{
-		hr = 0;
-	}
+
+	hr = 0;
 
 	return numBytesWritten;
 }

@@ -14,7 +14,7 @@ NamedPipeServerStream::NamedPipeServerStream(const std::wstring& pipeName, PipeD
 NamedPipeServerStream::NamedPipeServerStream(const std::wstring& pipeName, PipeDirection direction, int maxNumberOfServerInstances, PipeTransmissionMode transmissionMode, int inBufferSize, int outBufferSize)
 	: PipeStream(direction, transmissionMode)
 {
-	const auto normalizedPipePath = (fs::path("\\\\.\\pipe") / pipeName).wstring();
+	const auto normalizedPipePath = (fs::path(R"(\\.\pipe)") / pipeName).wstring();
 
 	Create(normalizedPipePath, direction, maxNumberOfServerInstances, transmissionMode, inBufferSize, outBufferSize);
 }
